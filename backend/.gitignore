@@ -1,4 +1,40 @@
-node_modules
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Dependencies & builds
+node_modules/
+dist/
+build/
+
+# Environment files (keep only example)
 .env
-logs
-certs
+.env.*
+!.env.example
+
+# Coverage
+coverage/
+
+# Editor & OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Caches
+.cache/
+.eslintcache
+
+# Mongo dumps (if you export)
+dump/

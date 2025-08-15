@@ -1,0 +1,2 @@
+export const maskApiKey = (k?: string | null) => k ? `${k.slice(0,4)}••••••••${k.slice(-4)}` : ''
+export const formatCurrency = (n: number) => new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(n)

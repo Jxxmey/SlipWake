@@ -1,0 +1,54 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# Node
+node_modules/
+.pnp
+.pnp.js
+.pnpm-debug.log*
+
+# Next.js
+.next/
+.next/cache/
+out/
+
+# TypeScript
+*.tsbuildinfo
+*.tsbuildinfo.*
+
+# Env (keep only example)
+.env.local
+.env*.local
+!.env.example
+
+# Testing / Coverage
+coverage/
+.vitest/
+jest-*
+
+# Editor & OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Build / Tooling caches
+.turbo/
+.vercel
+.cache/
+dist/
+
+# Storybook (future)
+.storybook-out/
+storybook-static/
+
+# Certs / Keys (if any generated locally)
+*.pem
+*.key
+*.crt
