@@ -8,14 +8,8 @@ import { logger } from '../utils/logger.js'
 
 const router = express.Router()
 
-function genApiKey() {
-  return 'sk_' + crypto.randomBytes(24).toString('hex')
-}
-
-function normalizeEmail(email) {
-  return String(email || '').trim().toLowerCase()
-}
-
+function genApiKey() { return 'sk_' + crypto.randomBytes(24).toString('hex') }
+function normalizeEmail(email) { return String(email || '').trim().toLowerCase() }
 function pickUser(u) {
   return {
     id: u._id?.toString(),
@@ -34,7 +28,6 @@ function pickUser(u) {
     phone_number: u.phone_number,
   }
 }
-
 function validateRegister(body) {
   const errors = []
   const email = normalizeEmail(body.email)
@@ -81,16 +74,10 @@ router.post('/register', async (req, res, next) => {
       address: req.body.address,
       phone_number: req.body.phone_number,
     })
-    const token = jwt.sign(
-      { sub: user._id.toString(), role: user.role || 'user' },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    )
+    const token = jwt.sign({ sub: user._id.toString(), role: user.role || 'user' }, process.env.JWT_SECRET, { expiresIn: '7d' })
     logger.info({ msg: 'user_registered', email })
     res.status(201).json({ token, user: pickUser(user) })
-  } catch (err) {
-    next(err)
-  }
+  } catch (err) { next(err) }
 })
 
 router.post('/login', async (req, res, next) => {
@@ -102,28 +89,15 @@ router.post('/login', async (req, res, next) => {
     if (!user) return res.status(401).json({ message: 'invalid_credentials' })
     const ok = await bcrypt.compare(password, user.password)
     if (!ok) return res.status(401).json({ message: 'invalid_credentials' })
-    if (!user.apiKey) {
-      user.apiKey = genApiKey()
-      await user.save()
-    }
-    const token = jwt.sign(
-      { sub: user._id.toString(), role: user.role || 'user' },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    )
+    if (!user.apiKey) { user.apiKey = genApiKey(); await user.save() }
+    const token = jwt.sign({ sub: user._id.toString(), role: user.role || 'user' }, process.env.JWT_SECRET, { expiresIn: '7d' })
     logger.info({ msg: 'user_login', email })
     res.json({ token, user: pickUser(user) })
-  } catch (err) {
-    next(err)
-  }
+  } catch (err) { next(err) }
 })
 
 router.get('/me', authJwt, async (req, res, next) => {
-  try {
-    res.json({ user: pickUser(req.user) })
-  } catch (err) {
-    next(err)
-  }
+  try { res.json({ user: pickUser(req.user) }) } catch (err) { next(err) }
 })
 
 export default router
